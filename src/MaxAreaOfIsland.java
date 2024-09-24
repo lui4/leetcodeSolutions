@@ -1,11 +1,11 @@
 import java.util.Arrays;
 
 public class MaxAreaOfIsland {
-    boolean[][] seen;
     int[][] directions;
+    int[][] grid;
     public int maxAreaOfIsland(int[][] grid) {
+        this.grid = grid;
         directions = new int[][]{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-        seen = new boolean[grid.length][grid[0].length];
 
         int answer = 0;
         for (int i = 0; i < grid.length; i++) {
@@ -17,14 +17,14 @@ public class MaxAreaOfIsland {
         return answer;
     }
     public boolean isValidCoordinate(int x, int y) {
-        return x >= 0 && x < seen.length && y >= 0 && y < seen[0].length;
+        return x >= 0 && x < grid.length && y >= 0 && y < grid[0].length;
     }
     public int dfs(int sourceX, int sourceY, int[][] grid) {
-        if(grid[sourceX][sourceY] == 0 || seen[sourceX][sourceY]) {
+        if(grid[sourceX][sourceY] == 0) {
             return 0;
         }
 
-        seen[sourceX][sourceY] = true;
+        grid[sourceX][sourceY] = 0;
 
         int areaOfIsland = 0;
         int newX;
@@ -32,7 +32,7 @@ public class MaxAreaOfIsland {
         for (int[] direction : directions) {
             newX = sourceX + direction[0];
             newY = sourceY + direction[1];
-            if (!isValidCoordinate(newX, newY) || seen[newX][newY]) {
+            if (!isValidCoordinate(newX, newY) || grid[newX][newY] == 0) {
                 continue;
             }
             areaOfIsland += dfs(newX, newY, grid);
