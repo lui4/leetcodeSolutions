@@ -16,9 +16,6 @@ public class MaxAreaOfIsland {
 
         return answer;
     }
-    public boolean isValidCoordinate(int x, int y) {
-        return x >= 0 && x < grid.length && y >= 0 && y < grid[0].length;
-    }
     public int dfs(int sourceX, int sourceY, int[][] grid) {
         if(grid[sourceX][sourceY] == 0) {
             return 0;
@@ -32,7 +29,12 @@ public class MaxAreaOfIsland {
         for (int[] direction : directions) {
             newX = sourceX + direction[0];
             newY = sourceY + direction[1];
-            if (!isValidCoordinate(newX, newY) || grid[newX][newY] == 0) {
+
+            if (!(newX >= 0 && newX < grid.length && newY >= 0 && newY < grid[0].length)) {
+                continue;
+            }
+
+            if (grid[newX][newY] == 0) {
                 continue;
             }
             areaOfIsland += dfs(newX, newY, grid);
