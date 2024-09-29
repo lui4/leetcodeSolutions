@@ -3,19 +3,22 @@ import java.util.Arrays;
 
 public class HowManyApplesCanYouPutInTheBasket {
     public int maxNumberOfApples(int[] weight) {
-        Arrays.sort(weight);
-        int basketSum = 0;
+        int[] weights = new int[1001];
 
-        int index = 0;
-        while (index < weight.length && basketSum < 5000) {
-            if (basketSum + weight[index] <= 5000) {
-                basketSum += weight[index];
-            } else {
-                break;
-            }
-            index++;
+        for (int i = 0; i < weight.length; i++) {
+            weights[weight[i]] += 1;
         }
 
-        return index;
+        int basketSum = 0;
+        int apples = 0;
+        for (int i = 0; i < 1001; i++) {
+            for (int j = 0; j < weights[i]; j++) {
+                if (basketSum + i <= 5000) {
+                    basketSum += i;
+                    apples++;
+                }
+            }
+        }
+        return apples;
     }
 }
